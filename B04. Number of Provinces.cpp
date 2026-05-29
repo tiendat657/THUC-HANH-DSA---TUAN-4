@@ -1,3 +1,4 @@
+====== CACH 1: DSU ======
 class DSU {
 private:
     vector<int> parent;
@@ -47,4 +48,34 @@ public:
         
         return provinces;
     }
+};
+
+====== CACH 2: DFS (LOANG) ======
+class Solution {
+public:
+    void dfs(vector<vector<int>>& isConnected, vector<bool> &visited, int city) {
+    visited[city] = true; // danh dau da tham roi de khong tham nhieu lam
+    
+    for (int n = 0; n < (int)isConnected.size(); n++) {
+        // neu co duong noi truc tiep va thanh pho ke do chua duoc tham
+        if (isConnected[city][n] == 1 && !visited[n]) {
+            dfs(isConnected, visited, n); // di tham luon
+        }
+    }
+}
+
+int findCircleNum(vector<vector<int>>& isConnected) {
+    int n = (int)isConnected.size();
+    vector<bool> visited(n, false);
+    int count = 0; // mac dinh ban dau la 0
+    
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) { // neu dinh nay chua duoc tham thi ta biet duoc rang dinh nay chua duoc loang toi -> cum khac
+            dfs(isConnected, visited, i);
+            count++; // tang 1 voi moi cum chua tim thay
+        }
+    }
+    
+    return count;
+}
 };
